@@ -4,10 +4,59 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>시간표</title>
+    <style>
+        table, td, th{
+            border: 1px solid black;
+            text-align: center;
+        }
+
+        #{{today}} {
+            background-color: yellow;
+            font-size: 30px;
+            font-weight:bold;
+        }
+    </style>
 </head>
 <body>
-    <div id="scheduleTable">
-
+    <div id="table">
+        <table>
+            <tr>
+                <th>시간표</th>
+                {% for i in range(1, 8) %}
+                <th>{{i}}교시</th>
+                {% endfor %}
+            </tr>
+            <tr id="monday">
+                <th>월</th>
+                {% for i in range(1, 8) %}
+                <td>{{schedule["monday"][i|string]}}</td>
+                {% endfor %}
+            </tr>
+            <tr id="tuesday">
+                <th>화</th>
+                {% for i in range(1, 8) %}
+                <td>{{schedule["tuesday"][i|string]}}</td>
+                {% endfor %}
+            </tr>
+            <tr id="wednesday">
+                <th>수</th>
+                {% for i in range(1, 8) %}
+                <td>{{schedule["wednesday"][i|string]}}</td>
+                {% endfor %}
+            </tr>
+            <tr id="thursday">
+                <th>목</th>
+                {% for i in range(1, 8) %}
+                <td>{{schedule["thursday"][i|string]}}</td>
+                {% endfor %}
+            </tr>
+            <tr id="friday">
+                <th>금</th>
+                {% for i in range(1, 8) %}
+                <td>{{schedule["friday"][i|string]}}</td>
+                {% endfor %}
+            </tr>
+        </table>
     </div>
     <div class="edit">
         <details>
@@ -15,53 +64,33 @@
             <form action="/schedule", method="POST">
                 <p>
                     월
-                    <input type="text" name="monday1" placeholder="1교시" size="2" maxlength="5">
-                    <input type="text" name="monday2" placeholder="2교시" size="2" maxlength="5">
-                    <input type="text" name="monday3" placeholder="3교시" size="2" maxlength="5">
-                    <input type="text" name="monday4" placeholder="4교시" size="2" maxlength="5">
-                    <input type="text" name="monday5" placeholder="5교시" size="2" maxlength="5">
-                    <input type="text" name="monday6" placeholder="6교시" size="2" maxlength="5">
-                    <input type="text" name="monday7" placeholder="7교시" size="2" maxlength="5">
+                    {% for i in range(1, 8) %}
+                    <input type="text" name="monday{{i}}" placeholder="{{i}}교시" value="{{schedule['monday'][i|string]}}" size="4" maxlength="5">
+                    {% endfor %}
                 </p>
                 <p>
                     화
-                    <input type="text" name="tuesday1" placeholder="1교시" size="2" maxlength="5">
-                    <input type="text" name="tuesday2" placeholder="2교시" size="2" maxlength="5">
-                    <input type="text" name="tuesday3" placeholder="3교시" size="2" maxlength="5">
-                    <input type="text" name="tuesday4" placeholder="4교시" size="2" maxlength="5">
-                    <input type="text" name="tuesday5" placeholder="5교시" size="2" maxlength="5">
-                    <input type="text" name="tuesday6" placeholder="6교시" size="2" maxlength="5">
-                    <input type="text" name="tuesday7" placeholder="7교시" size="2" maxlength="5">
+                    {% for i in range(1, 8) %}
+                    <input type="text" name="tuesday{{i}}" placeholder="{{i}}교시" value="{{schedule['tuesday'][i|string]}}" size="4" maxlength="5">
+                    {% endfor %}
                 </p>
                 <p>
                     수
-                    <input type="text" name="wednesday1" placeholder="1교시" size="2" maxlength="5">
-                    <input type="text" name="wednesday2" placeholder="2교시" size="2" maxlength="5">
-                    <input type="text" name="wednesday3" placeholder="3교시" size="2" maxlength="5">
-                    <input type="text" name="wednesday4" placeholder="4교시" size="2" maxlength="5">
-                    <input type="text" name="wednesday5" placeholder="5교시" size="2" maxlength="5">
-                    <input type="text" name="wednesday6" placeholder="6교시" size="2" maxlength="5">
-                    <input type="text" name="wednesday7" placeholder="7교시" size="2" maxlength="5">
+                    {% for i in range(1, 8) %}
+                    <input type="text" name="wednesday{{i}}" placeholder="{{i}}교시" value="{{schedule['wednesday'][i|string]}}" size="4" maxlength="5">
+                    {% endfor %}
                 </p>
                 <p>
                     목
-                    <input type="text" name="thursday1" placeholder="1교시" size="2" maxlength="5">
-                    <input type="text" name="thursday2" placeholder="2교시" size="2" maxlength="5">
-                    <input type="text" name="thursday3" placeholder="3교시" size="2" maxlength="5">
-                    <input type="text" name="thursday4" placeholder="4교시" size="2" maxlength="5">
-                    <input type="text" name="thursday5" placeholder="5교시" size="2" maxlength="5">
-                    <input type="text" name="thursday6" placeholder="6교시" size="2" maxlength="5">
-                    <input type="text" name="thursday7" placeholder="7교시" size="2" maxlength="5">
+                    {% for i in range(1, 8) %}
+                    <input type="text" name="thursday{{i}}" placeholder="{{i}}교시" value="{{schedule['thursday'][i|string]}}" size="4" maxlength="5">
+                    {% endfor %}
                 </p>
                 <p>
                     금
-                    <input type="text" name="friday1" placeholder="1교시" size="2" maxlength="5">
-                    <input type="text" name="friday2" placeholder="2교시" size="2" maxlength="5">
-                    <input type="text" name="friday3" placeholder="3교시" size="2" maxlength="5">
-                    <input type="text" name="friday4" placeholder="4교시" size="2" maxlength="5">
-                    <input type="text" name="friday5" placeholder="5교시" size="2" maxlength="5">
-                    <input type="text" name="friday6" placeholder="6교시" size="2" maxlength="5">
-                    <input type="text" name="friday7" placeholder="7교시" size="2" maxlength="5">
+                    {% for i in range(1, 8) %}
+                    <input type="text" name="friday{{i}}" placeholder="{{i}}교시" value="{{schedule['friday'][i|string]}}" size="4" maxlength="5">
+                    {% endfor %}
                 </p>
                 <p>비밀번호: <input type="text" name="password"> </p>
                 <input type="submit" value="수정하기">

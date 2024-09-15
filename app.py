@@ -1,5 +1,5 @@
 from flask import Flask, render_template, request
-import os, json
+import os, json, datetime
 
 
 app = Flask(__name__)
@@ -14,7 +14,9 @@ def mainPage():
 @app.route("/schedule", methods = ["GET", "POST"])
 def schedulePage():
     if request.method == "POST":
-        if request.form["password"] != json.loads(fileDir("../data/password.json"))['password']:
+        with open(fileDir("../data/password.json")) as f:
+            _passwordData = json.load(f)
+        if request.form["password"] != _passwordData["password"]:
             pass
         else:
             temp_data = {
@@ -59,9 +61,12 @@ def schedulePage():
                             7:request.form['friday7']
                             }
             }
-            with open(json.load(fileDir("../schedule.json")), 'r') as f:
+            with open(fileDir("../data/schedule.json"), 'w') as f:
                 json.dump(temp_data, f, indent=4)
-    return render_template("schedule.html")
+    with open(fileDir("../data/schedule.json")) as f:
+            scheduleData = json.load(f)
+        
+    return render_template("schedule.html", schedule=scheduleData, today=datetime.datetime.now().strftime("%A").lower())
 
 if __name__ == "__main__":
-    app.run(debug=True)
+    app.run()
