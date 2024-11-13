@@ -5,7 +5,7 @@ import os, json, datetime
 app = Flask(__name__)
 
 def fileDir(relativeDir: str):
-    return os.path.join(__file__, relativeDir)
+    return os.path.join(os.path.dirname(__file__), relativeDir)
 
 @app.route("/")
 def mainPage():
@@ -14,7 +14,7 @@ def mainPage():
 @app.route("/schedule", methods = ["GET", "POST"])
 def schedulePage():
     if request.method == "POST":
-        with open(fileDir("../data/password.json")) as f:
+        with open(fileDir("data/password.json")) as f:
             _passwordData = json.load(f)
         if request.form["password"] != _passwordData["password"]:
             pass
@@ -61,12 +61,12 @@ def schedulePage():
                             7:request.form['friday7']
                             }
             }
-            with open(fileDir("../data/schedule.json"), 'w') as f:
+            with open(fileDir("data/schedule.json"), 'w') as f:
                 json.dump(temp_data, f, indent=4)
-    with open(fileDir("../data/schedule.json")) as f:
+    with open(fileDir("data/schedule.json")) as f:
             scheduleData = json.load(f)
         
     return render_template("schedule.html", schedule=scheduleData, today=datetime.datetime.now().strftime("%A").lower())
 
 if __name__ == "__main__":
-    app.run()
+    app.run(debug=True)
